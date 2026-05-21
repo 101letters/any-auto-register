@@ -211,27 +211,4 @@ def sync_account(account) -> list[dict[str, Any]]:
             persist_sub2api_sync_result(account, ok, msg)
             results.append({"name": "Sub2API", "ok": ok, "msg": msg})
 
-    elif platform == "grok":
-        grok2api_url = str(config_store.get("grok2api_url", "") or "").strip()
-        if grok2api_url:
-            from services.grok2api_runtime import ensure_grok2api_ready
-            from platforms.grok.grok2api_upload import upload_to_grok2api
-
-            ready, ready_msg = ensure_grok2api_ready()
-            if not ready:
-                results.append({"name": "grok2api", "ok": False, "msg": ready_msg})
-                return results
-
-            ok, msg = upload_to_grok2api(account)
-            results.append({"name": "grok2api", "ok": ok, "msg": msg})
-
-    elif platform == "kiro":
-        from platforms.kiro.account_manager_upload import resolve_manager_path, upload_to_kiro_manager
-
-        configured_path = str(config_store.get("kiro_manager_path", "") or "").strip()
-        target_path = resolve_manager_path(configured_path or None)
-        if configured_path or target_path.parent.exists() or target_path.exists():
-            ok, msg = upload_to_kiro_manager(account, path=configured_path or None)
-            results.append({"name": "Kiro Manager", "ok": ok, "msg": msg})
-
     return results

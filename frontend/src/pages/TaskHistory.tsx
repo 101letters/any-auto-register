@@ -140,7 +140,6 @@ export default function TaskHistory() {
             options={[
               { value: '', label: '全部平台' },
               { value: 'chatgpt', label: 'ChatGPT' },
-              { value: 'cursor', label: 'Cursor' },
             ]}
           />
           <Button icon={<ReloadOutlined spin={loading} />} onClick={load} loading={loading} />

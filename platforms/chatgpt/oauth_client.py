@@ -16,7 +16,7 @@ try:
 except ImportError:
     import requests as curl_requests
 
-from .phone_service import SMSToMePhoneService
+from .hero_sms_service import HeroSMSPhoneService
 from .utils import (
     FlowState,
     build_browser_headers,
@@ -2820,10 +2820,10 @@ class OAuthClient:
             )
             return None
 
-        phone_service = SMSToMePhoneService(self.config, log_fn=self._log)
+        phone_service = HeroSMSPhoneService(self.config, log_fn=self._log)
         if not phone_service.enabled:
             self._set_error(
-                "当前链路需要手机号验证，但未配置可用的手机号能力（SMSToMe 或固定手机号验证码）"
+                "当前链路需要手机号验证，但未配置可用的手机号能力（HeroSMS 或固定手机号验证码）"
             )
             return None
 
@@ -2839,7 +2839,7 @@ class OAuthClient:
                 break
 
             if not entry:
-                last_failure = last_failure or "SMSToMe 号码池中无可用手机号"
+                last_failure = last_failure or "HeroSMS 无可用手机号"
                 break
 
             prefix = phone_service.prefix_hint(entry.phone)
@@ -2890,7 +2890,7 @@ class OAuthClient:
             )
 
             if verification_channel != "sms":
-                last_failure = f"add_phone 已切到 {verification_channel} 通道，当前 SMSToMe 仅支持短信接码"
+                last_failure = f"add_phone 已切到 {verification_channel} 通道，当前 HeroSMS 仅支持短信接码"
                 self._log(last_failure)
                 excluded_prefixes.add(prefix)
                 continue

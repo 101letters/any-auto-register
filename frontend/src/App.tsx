@@ -81,7 +81,6 @@ function AppContent() {
   useEffect(() => {
     apiFetch('/platforms')
       .then(d => setPlatforms((d || [])
-        .filter((p: any) => !['tavily', 'cursor'].includes(p.name))
         .map((p: any) => ({ key: p.name, label: p.display_name }))))
       .catch(() => {})
   }, [])

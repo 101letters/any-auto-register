@@ -337,46 +337,6 @@ const TAB_ITEMS = [
     ],
   },
   {
-    key: 'grok',
-    label: 'Grok',
-    icon: <ApiOutlined />,
-    sections: [
-      {
-        title: 'grok2api',
-        desc: '注册成功后自动导入到 grok2api 管理后台',
-        fields: [
-          { key: 'grok2api_url', label: 'API URL', placeholder: 'http://127.0.0.1:7860' },
-          { key: 'grok2api_app_key', label: 'App Key', secret: true },
-          { key: 'grok2api_pool', label: 'Token Pool', placeholder: 'ssoBasic 或 ssoSuper' },
-          { key: 'grok2api_quota', label: 'Quota（可选）', placeholder: '留空按池默认值' },
-        ],
-      },
-    ],
-  },
-  {
-    key: 'kiro',
-    label: 'Kiro',
-    icon: <ApiOutlined />,
-    sections: [
-      {
-        title: 'Kiro Account Manager',
-        desc: '注册成功后自动写入 kiro-account-manager 的 accounts.json',
-        fields: [
-          {
-            key: 'kiro_manager_path',
-            label: 'accounts.json 路径（可选）',
-            placeholder: '留空则自动使用系统默认路径',
-          },
-          {
-            key: 'kiro_manager_exe',
-            label: 'Kiro Manager 可执行文件（可选）',
-            placeholder: '未安装 Rust 时可填写已安装的 KiroAccountManager.exe',
-          },
-        ],
-      },
-    ],
-  },
-  {
     key: 'contribution',
     label: '贡献',
     icon: <PlusOutlined />,
@@ -1054,22 +1014,6 @@ function IntegrationsPanel() {
               >
                 卸载
               </Button>
-              {item.name === 'grok2api' ? (
-                <Button
-                  loading={busy === 'backfill-grok'}
-                  onClick={() => backfill(['grok'], 'Grok', 'backfill-grok')}
-                >
-                  回填现有 Grok 账号
-                </Button>
-              ) : null}
-              {item.name === 'kiro-manager' ? (
-                <Button
-                  loading={busy === 'backfill-kiro'}
-                  onClick={() => backfill(['kiro'], 'Kiro', 'backfill-kiro')}
-                >
-                  回填现有 Kiro 账号
-                </Button>
-              ) : null}
             </Space>
           </Space>
         </Card>

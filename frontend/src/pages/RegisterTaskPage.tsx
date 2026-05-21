@@ -262,11 +262,6 @@ export default function RegisterTaskPage() {
             <Select
               options={[
                 { value: 'chatgpt', label: 'ChatGPT' },
-                { value: 'cursor', label: 'Cursor' },
-                { value: 'kiro', label: 'Kiro' },
-                { value: 'grok', label: 'Grok' },
-                { value: 'tavily', label: 'Tavily' },
-                { value: 'openblocklabs', label: 'OpenBlockLabs' },
               ]}
             />
           </Form.Item>
