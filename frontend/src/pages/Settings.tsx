@@ -308,15 +308,13 @@ const TAB_ITEMS = [
         ],
       },
       {
-        title: 'SMSToMe 手机验证',
-        desc: 'ChatGPT add_phone 阶段自动取号并轮询短信验证码',
+        title: 'HeroSMS 手机验证',
+        desc: 'ChatGPT add_phone 阶段自动取号并轮询短信验证码（兼容 SMS-Activate 协议）',
         fields: [
-          { key: 'smstome_cookie', label: 'SMSToMe Cookie', secret: true },
-          { key: 'smstome_country_slugs', label: '国家列表', placeholder: 'united-kingdom,poland' },
-          { key: 'smstome_phone_attempts', label: '手机号尝试次数', placeholder: '3' },
-          { key: 'smstome_otp_timeout_seconds', label: '短信等待秒数', placeholder: '45' },
-          { key: 'smstome_poll_interval_seconds', label: '轮询间隔秒数', placeholder: '5' },
-          { key: 'smstome_sync_max_pages_per_country', label: '每国同步页数', placeholder: '5' },
+          { key: 'hero_sms_api_key', label: 'HeroSMS API Key', secret: true },
+          { key: 'hero_sms_max_attempts', label: '手机号尝试次数', placeholder: '3' },
+          { key: 'hero_sms_otp_timeout', label: '短信等待秒数', placeholder: '120' },
+          { key: 'hero_sms_poll_interval', label: '轮询间隔秒数', placeholder: '5' },
         ],
       },
     ],
@@ -813,23 +811,6 @@ function IntegrationsPanel() {
       message.error(e?.message || '操作失败')
       showResultModal('操作结果', e?.message || e || '操作失败', false)
       await load()
-    } finally {
-      setBusy('')
-    }
-  }
-
-  const backfill = async (platforms: string[], label: string, busyKey: string) => {
-    setBusy(busyKey)
-    try {
-      const d = await apiFetch('/integrations/backfill', {
-        method: 'POST',
-        body: JSON.stringify({ platforms }),
-      })
-      message.success(`${label} 回填完成：成功 ${d.success} / ${d.total}`)
-      showResultModal(`${label} 回填结果`, d, true)
-    } catch (e: any) {
-      message.error(e?.message || `${label} 回填失败`)
-      showResultModal(`${label} 回填结果`, e?.message || e || `${label} 回填失败`, false)
     } finally {
       setBusy('')
     }
